@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Umfrage: Der schönste Bergsee Graubündens</title>
+<style>
+/* GRF web fonts – loaded from graubuenden.ch */
+@font-face {
+  font-family: "CircularGraubuendenWeb";
+  src: url("https://www.graubuenden.ch/themes/tonic/dist/fonts/CirculargraubuendenWeb-Book.woff2") format("woff2"),
+       url("https://www.graubuenden.ch/themes/tonic/dist/fonts/CirculargraubuendenWeb-Book.woff") format("woff");
+  font-weight: 400; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "CircularGraubuendenWeb";
+  src: url("https://www.graubuenden.ch/themes/tonic/dist/fonts/CirculargraubuendenWeb-Bold.woff2") format("woff2"),
+       url("https://www.graubuenden.ch/themes/tonic/dist/fonts/CirculargraubuendenWeb-Bold.woff") format("woff");
+  font-weight: 600 700; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TheMix";
+  src: url("https://www.graubuenden.ch/themes/tonic/dist/fonts/TheMix_500_.woff2") format("woff2"),
+       url("https://www.graubuenden.ch/themes/tonic/dist/fonts/TheMix_500_.woff") format("woff");
+  font-weight: 400 500; font-style: normal; font-display: swap;
+}
+@font-face {
+  font-family: "TheMix";
+  src: url("https://www.graubuenden.ch/themes/tonic/dist/fonts/TheMix_700_.woff2") format("woff2"),
+       url("https://www.graubuenden.ch/themes/tonic/dist/fonts/TheMix_700_.woff") format("woff");
+  font-weight: 600 700; font-style: normal; font-display: swap;
+}
+
+:root {
+  --granit: #79775F;
+  --granit-25: #E0DFD9;
+  --granit-10: #F2F2F0;
+  --granit-5: #F9F9F7;
+  --granit-hover: #666450;
+  --slate: #3C3C3C;
+  --granat: #C60219;
+  --grf-black: #191813;
+  --font-circular: "CircularGraubuendenWeb", "Circular Std", "CircularStd", "DM Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  --font-mix: "TheMix", "TheMixOsF", "TheMix Plain", "Alegreya Sans", "Gill Sans", "Trebuchet MS", sans-serif;
+}
+
+html, body { margin: 0; padding: 0; height: auto; }
+body {
+  background: #fff;
+  color: var(--grf-black);
+  font-family: var(--font-circular);
+  font-size: 16px; line-height: 24px; font-weight: 400;
+  -webkit-text-size-adjust: 100%;
+}
+*, *::before, *::after { box-sizing: border-box; }
+button, a { touch-action: manipulation; }
+
+.wrap { padding: 24px 16px 32px; max-width: 720px; }
+
+/* Topline + Titel */
+.page-intro { margin: 0 0 24px; }
+.topline {
+  margin: 0; color: var(--grf-black); font-family: var(--font-circular);
+  font-size: clamp(32px, 9vw, 40px); font-weight: 700; letter-spacing: -.02em; line-height: 1.24;
+}
+.title {
+  margin: 2px 0 0; color: var(--grf-black); font-family: var(--font-mix);
+  font-size: clamp(30px, 8vw, 36px); font-weight: 400; letter-spacing: 0; line-height: 1.25;
+}
+
+/* Frage + Antworten */
+fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
+.question { font-size: 18px; line-height: 30px; font-weight: 700; margin: 0 0 16px; padding: 0; }
+.options { display: grid; gap: 12px; }
+.opt {
+  display: flex; align-items: center; gap: 12px; cursor: pointer;
+  padding: 16px; border: 1px solid var(--granit-25); background: var(--granit-5);
+  font-size: 16px; line-height: 24px;
+}
+.opt:hover { border-color: var(--granit); }
+.opt:has(input:checked) { border-color: var(--granit); background: var(--granit-10); }
+.opt:has(input:focus-visible) { outline: 3px solid var(--granit); outline-offset: 2px; }
+.opt input { accent-color: var(--granit); width: 20px; height: 20px; margin: 0; flex: none; }
+.opt .key { font-weight: 700; color: var(--granit); }
+
+/* Button (Primary, eckig) */
+.btn {
+  display: inline-block; margin-top: 24px; padding: 16px 32px; border: 0; border-radius: 0;
+  background: var(--granit); color: #fff; cursor: pointer;
+  font-family: var(--font-circular); font-size: 12px; line-height: 16px; font-weight: 700;
+  text-transform: uppercase; letter-spacing: .96px;
+}
+.btn:hover:not(:disabled), .btn:active:not(:disabled) { background: var(--granit-hover); }
+.btn:disabled { background: var(--granit-25); color: var(--granit-5); cursor: not-allowed; }
+.btn:focus-visible { outline: 3px solid var(--grf-black); outline-offset: 2px; }
+
+.msg { margin: 12px 0 0; font-size: 15px; line-height: 22px; color: var(--granat); min-height: 22px; }
+
+/* Ergebnisse */
+.results[hidden], .poll-form[hidden] { display: none; }
+.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
+.row-head { display: flex; justify-content: space-between; gap: 16px; font-weight: 700; margin-bottom: 8px; }
+.track { height: 16px; background: var(--granit-10); }
+.fill { height: 100%; width: 0; background: var(--granit); transition: width .7s ease; }
+.row--mine .fill { background: var(--granit-hover); }
+.row--mine .label::after { content: " · deine Stimme"; font-weight: 400; }
+.total { margin: 24px 0 0; font-size: 15px; line-height: 22px; color: #474642; }
+
+@media (min-width: 761px) {
+  .wrap { padding: 32px 24px 40px; }
+  .page-intro { margin-bottom: 32px; }
+  .topline { font-size: clamp(32px, 3.6vw, 42px); }
+  .title { font-size: clamp(32px, 3.5vw, 40px); }
+  .question { font-size: 20px; line-height: 32px; }
+}
+@media (prefers-reduced-motion: reduce) { .fill { transition: none; } }
+</style>
+</head>
+<body>
+
+<div class="wrap" id="poll" aria-live="polite">
+  <header class="page-intro">
+    <p class="topline">Deine Stimme zählt.</p>
+    <h1 class="title">Der schönste Bergsee Graubündens</h1>
+  </header>
+
+  <form class="poll-form" novalidate>
+    <fieldset>
+      <legend class="question"></legend>
+      <div class="options"></div>
+    </fieldset>
+    <button type="submit" class="btn" disabled>Abstimmen</button>
+    <p class="msg" role="status"></p>
+  </form>
+
+  <div class="results" hidden>
+    <p class="question" id="result-question"></p>
+    <ul class="bars"></ul>
+    <p class="total"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  /* ================= KONFIGURATION ================= */
+  var CONFIG = {
+    supabaseUrl: "https://iiwgcszmfrtstntondcd.supabase.co",
+    supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlpd2djc3ptZnJ0c3RudG9uZGNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMzU3MjIsImV4cCI6MjEwNzYxMTcyMn0.SN7uv7ZUtvXSHzazW92kJecW9qMOqKRPYHNOCsyzeoc", // anon Key: darf öffentlich sein
+    poll: {
+      id: "bergsee-2026",   // eindeutig pro Umfrage
+      question: "Welches ist der schönste Bergsee Graubündens?",
+      options: [
+        { id: "cresta", label: "Cresta-See" },
+        { id: "rims",   label: "Lai da Rims" }
+      ]
+    }
+  };
+  /* ================================================= */
+
+  var root = document.getElementById("poll");
+  var form = root.querySelector(".poll-form");
+  var optsBox = root.querySelector(".options");
+  var btn = root.querySelector(".btn");
+  var msg = root.querySelector(".msg");
+  var resBox = root.querySelector(".results");
+  var bars = root.querySelector(".bars");
+  var totalEl = root.querySelector(".total");
+  var P = CONFIG.poll;
+  var demo = !CONFIG.supabaseUrl || !CONFIG.supabaseAnonKey;
+  var KEY_VOTED = "gr_poll_voted_" + P.id;
+  var KEY_DEMO = "gr_poll_demo_" + P.id;
+
+  function store(op, k, v) {
+    try { return op === "get" ? localStorage.getItem(k) : localStorage.setItem(k, v); }
+    catch (e) { return null; }
+  }
+
+  form.querySelector(".question").textContent = P.question;
+  root.querySelector("#result-question").textContent = P.question;
+
+  P.options.forEach(function (o, i) {
+    var label = document.createElement("label");
+    label.className = "opt";
+    var input = document.createElement("input");
+    input.type = "radio"; input.name = "poll-" + P.id; input.value = o.id;
+    var key = document.createElement("span");
+    key.className = "key"; key.textContent = String.fromCharCode(65 + i) + ")";
+    var txt = document.createElement("span");
+    txt.textContent = o.label;
+    label.appendChild(input); label.appendChild(key); label.appendChild(txt);
+    optsBox.appendChild(label);
+  });
+
+  optsBox.addEventListener("change", function () { btn.disabled = false; });
+
+  function rpc(fn, body) {
+    return fetch(CONFIG.supabaseUrl + "/rest/v1/rpc/" + fn, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        apikey: CONFIG.supabaseAnonKey,
+        Authorization: "Bearer " + CONFIG.supabaseAnonKey
+      },
+      body: JSON.stringify(body)
+    }).then(function (r) {
+      if (!r.ok) throw new Error("HTTP " + r.status);
+      return r.status === 204 ? null : r.json();
+    });
+  }
+
+  function loadResults() {
+    if (demo) {
+      var d = {};
+      try { d = JSON.parse(store("get", KEY_DEMO) || "{}"); } catch (e) {}
+      return Promise.resolve(d);
+    }
+    return rpc("get_poll_results", { p_poll_id: P.id }).then(function (rows) {
+      var d = {};
+      (rows || []).forEach(function (r) { d[r.option_id] = Number(r.votes); });
+      return d;
+    });
+  }
+
+  function sendVote(optionId) {
+    if (demo) {
+      return loadResults().then(function (d) {
+        d[optionId] = (d[optionId] || 0) + 1;
+        store("set", KEY_DEMO, JSON.stringify(d));
+      });
+    }
+    return rpc("cast_poll_vote", { p_poll_id: P.id, p_option_id: optionId });
+  }
+
+  function showResults(data, mine) {
+    var total = P.options.reduce(function (s, o) { return s + (data[o.id] || 0); }, 0);
+    bars.textContent = "";
+    P.options.forEach(function (o) {
+      var n = data[o.id] || 0;
+      var pct = total ? Math.round((n / total) * 100) : 0;
+      var li = document.createElement("li");
+      li.className = "row" + (o.id === mine ? " row--mine" : "");
+      var head = document.createElement("div"); head.className = "row-head";
+      var l = document.createElement("span"); l.className = "label"; l.textContent = o.label;
+      var p = document.createElement("span"); p.textContent = pct + " % (" + n + ")";
+      head.appendChild(l); head.appendChild(p);
+      var track = document.createElement("div"); track.className = "track";
+      track.setAttribute("role", "progressbar");
+      track.setAttribute("aria-valuemin", "0"); track.setAttribute("aria-valuemax", "100");
+      track.setAttribute("aria-valuenow", pct); track.setAttribute("aria-label", o.label);
+      var fill = document.createElement("div"); fill.className = "fill";
+      track.appendChild(fill);
+      li.appendChild(head); li.appendChild(track);
+      bars.appendChild(li);
+      requestAnimationFrame(function () { requestAnimationFrame(function () { fill.style.width = pct + "%"; }); });
+    });
+    totalEl.textContent = total + (total === 1 ? " Stimme" : " Stimmen") +
+      (demo ? " · Demo-Modus (nicht zentral gespeichert)" : "");
+    form.hidden = true;
+    resBox.hidden = false;
+  }
+
+  // Abstimmen per Klick (kein touchstart/touchend)
+  btn.addEventListener("click", function (e) {
+    e.preventDefault();
+    var chosen = form.querySelector("input[type=radio]:checked");
+    if (!chosen) return;
+    btn.disabled = true; msg.textContent = "";
+    sendVote(chosen.value)
+      .then(function () { store("set", KEY_VOTED, chosen.value); return loadResults(); })
+      .then(function (d) { showResults(d, chosen.value); })
+      .catch(function () {
+        msg.textContent = "Leider hat das Abstimmen nicht geklappt. Bitte versuche es später erneut.";
+        btn.disabled = false;
+      });
+  });
+  form.addEventListener("submit", function (e) { e.preventDefault(); });
+
+  var already = store("get", KEY_VOTED);
+  if (already) {
+    loadResults().then(function (d) { showResults(d, already); })
+      .catch(function () { msg.textContent = "Die Ergebnisse konnten nicht geladen werden."; });
+  }
+})();
+</script>
+
+<script>
+/* ===== GRF Auto-Height Sender – NICHT VERÄNDERN ===== */
+(function () {
+  var lastHeight = 0, scheduled = false;
+  function getHeight() {
+    var b = document.body;
+    if (!b) return 0;
+    return Math.ceil(Math.max(b.scrollHeight, b.offsetHeight, b.getBoundingClientRect().height));
+  }
+  function send() {
+    scheduled = false;
+    var h = getHeight();
+    if (h > 0 && Math.abs(h - lastHeight) > 1) {   // nur echte Änderungen senden, kein Loop
+      lastHeight = h;
+      window.parent.postMessage({ height: h }, '*');
+    }
+  }
+  function schedule() {
+    if (scheduled) return;
+    scheduled = true;
+    (window.requestAnimationFrame || setTimeout)(send);
+  }
+  window.addEventListener('load', schedule);
+  window.addEventListener('resize', schedule);
+  window.addEventListener('orientationchange', function () { setTimeout(schedule, 300); });
+  document.addEventListener('click', function () { setTimeout(schedule, 100); }, true);
+  if (window.ResizeObserver) new ResizeObserver(schedule).observe(document.body);
+  if (window.MutationObserver) {
+    new MutationObserver(schedule).observe(document.body, {
+      childList: true, subtree: true, attributes: true, characterData: true
+    });
+  }
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(schedule);
+  [100, 500, 1500].forEach(function (t) { setTimeout(schedule, t); });
+  schedule();
+})();
+</script>
+</body>
+</html>
