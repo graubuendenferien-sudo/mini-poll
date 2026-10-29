@@ -33,8 +33,6 @@
   --granit-10: #F2F2F0;
   --granit-5: #F9F9F7;
   --granit-hover: #666450;
-  --slate: #3C3C3C;
-  --granat: #C60219;
   --grf-black: #191813;
   --font-circular: "CircularGraubuendenWeb", "Circular Std", "CircularStd", "DM Sans", system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
   --font-mix: "TheMix", "TheMixOsF", "TheMix Plain", "Alegreya Sans", "Gill Sans", "Trebuchet MS", sans-serif;
@@ -45,62 +43,103 @@ body {
   background: #fff;
   color: var(--grf-black);
   font-family: var(--font-circular);
-  font-size: 16px; line-height: 24px; font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  font-weight: 400;
   -webkit-text-size-adjust: 100%;
 }
 *, *::before, *::after { box-sizing: border-box; }
 button, a { touch-action: manipulation; }
+button, input { font: inherit; }
 
-.wrap { padding: 24px 16px 32px; max-width: 720px; }
-
-/* Topline + Titel */
+.wrap { width: 100%; max-width: 720px; padding: 24px 16px 32px; }
 .page-intro { margin: 0 0 24px; }
 .topline {
-  margin: 0; color: var(--grf-black); font-family: var(--font-circular);
-  font-size: clamp(32px, 9vw, 40px); font-weight: 700; letter-spacing: -.02em; line-height: 1.24;
+  margin: 0;
+  color: var(--grf-black);
+  font-family: var(--font-circular);
+  font-size: clamp(32px, 9vw, 40px);
+  font-weight: 700;
+  letter-spacing: -.02em;
+  line-height: 1.24;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 .title {
-  margin: 2px 0 0; color: var(--grf-black); font-family: var(--font-mix);
-  font-size: clamp(30px, 8vw, 36px); font-weight: 400; letter-spacing: 0; line-height: 1.25;
+  margin: 2px 0 0;
+  color: var(--grf-black);
+  font-family: var(--font-mix);
+  font-size: clamp(30px, 8vw, 36px);
+  font-weight: 400;
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 
-/* Frage + Antworten */
-fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
-.question { font-size: 18px; line-height: 30px; font-weight: 700; margin: 0 0 16px; padding: 0; }
+fieldset { min-width: 0; margin: 0; padding: 0; border: 0; }
+.question { margin: 0 0 16px; padding: 0; font-size: 18px; line-height: 30px; font-weight: 700; }
 .options { display: grid; gap: 12px; }
 .opt {
-  display: flex; align-items: center; gap: 12px; cursor: pointer;
-  padding: 16px; border: 1px solid var(--granit-25); background: var(--granit-5);
-  font-size: 16px; line-height: 24px;
+  display: flex;
+  min-width: 0;
+  align-items: center;
+  gap: 12px;
+  padding: 16px;
+  border: 1px solid var(--granit-25);
+  background: var(--granit-5);
+  cursor: pointer;
+  overflow-wrap: anywhere;
+  hyphens: auto;
 }
 .opt:hover { border-color: var(--granit); }
 .opt:has(input:checked) { border-color: var(--granit); background: var(--granit-10); }
 .opt:has(input:focus-visible) { outline: 3px solid var(--granit); outline-offset: 2px; }
-.opt input { accent-color: var(--granit); width: 20px; height: 20px; margin: 0; flex: none; }
-.opt .key { font-weight: 700; color: var(--granit); }
+.opt input { flex: none; width: 20px; height: 20px; margin: 0; accent-color: var(--granit); }
+.opt .key { flex: none; color: var(--granit); font-weight: 700; }
+.opt .option-label { min-width: 0; overflow-wrap: anywhere; hyphens: auto; }
 
-/* Button (Primary, eckig) */
 .btn {
-  display: inline-block; margin-top: 24px; padding: 16px 32px; border: 0; border-radius: 0;
-  background: var(--granit); color: #fff; cursor: pointer;
-  font-family: var(--font-circular); font-size: 12px; line-height: 16px; font-weight: 700;
-  text-transform: uppercase; letter-spacing: .96px;
+  display: inline-block;
+  margin-top: 24px;
+  padding: 16px 32px;
+  border: 0;
+  border-radius: 0;
+  background: var(--granit);
+  color: #fff;
+  cursor: pointer;
+  font-family: var(--font-circular);
+  font-size: 12px;
+  line-height: 16px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .96px;
 }
 .btn:hover:not(:disabled), .btn:active:not(:disabled) { background: var(--granit-hover); }
 .btn:disabled { background: var(--granit-25); color: var(--granit-5); cursor: not-allowed; }
-.btn:focus-visible { outline: 3px solid var(--grf-black); outline-offset: 2px; }
+.btn:focus-visible { outline: 3px solid var(--granit-hover); outline-offset: 2px; }
+.btn-secondary {
+  margin-top: 16px;
+  border: 1px solid var(--granit);
+  background: #fff;
+  color: var(--granit);
+}
+.btn-secondary:hover:not(:disabled), .btn-secondary:active:not(:disabled) {
+  border-color: var(--granit-hover);
+  background: var(--granit-10);
+  color: var(--granit-hover);
+}
 
-.msg { margin: 12px 0 0; font-size: 15px; line-height: 22px; color: var(--granat); min-height: 22px; }
-
-/* Ergebnisse */
-.results[hidden], .poll-form[hidden] { display: none; }
-.bars { list-style: none; margin: 0; padding: 0; display: grid; gap: 20px; }
-.row-head { display: flex; justify-content: space-between; gap: 16px; font-weight: 700; margin-bottom: 8px; }
+.msg { min-height: 22px; margin: 12px 0 0; color: var(--granit-hover); font-size: 15px; line-height: 22px; }
+.results[hidden], .poll-form[hidden], [hidden] { display: none !important; }
+.bars { display: grid; gap: 20px; margin: 0; padding: 0; list-style: none; }
+.row-head { display: flex; justify-content: space-between; gap: 16px; margin-bottom: 8px; font-weight: 700; }
+.row-head span { overflow-wrap: anywhere; hyphens: auto; }
 .track { height: 16px; background: var(--granit-10); }
-.fill { height: 100%; width: 0; background: var(--granit); transition: width .7s ease; }
+.fill { width: 0; height: 100%; background: var(--granit); transition: width .7s ease; }
 .row--mine .fill { background: var(--granit-hover); }
 .row--mine .label::after { content: " · deine Stimme"; font-weight: 400; }
-.total { margin: 24px 0 0; font-size: 15px; line-height: 22px; color: #474642; }
+.total { margin: 24px 0 0; color: var(--granit-hover); font-size: 15px; line-height: 22px; }
+.results-error { margin: 12px 0 0; color: var(--granit-hover); }
 
 @media (min-width: 761px) {
   .wrap { padding: 32px 24px 40px; }
@@ -113,7 +152,6 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
 </style>
 </head>
 <body>
-
 <div class="wrap" id="poll" aria-live="polite">
   <header class="page-intro">
     <p class="topline">Deine Stimme zählt.</p>
@@ -129,25 +167,29 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
     <p class="msg" role="status"></p>
   </form>
 
-  <div class="results" hidden>
+  <section class="results" hidden aria-labelledby="result-question">
     <p class="question" id="result-question"></p>
     <ul class="bars"></ul>
     <p class="total"></p>
-  </div>
+    <p class="results-error" role="status" hidden></p>
+    <button type="button" class="btn btn-secondary retry-btn" hidden>Ergebnisse erneut laden</button>
+  </section>
 </div>
 
 <script>
 (function () {
+  "use strict";
+
   /* ================= KONFIGURATION ================= */
   var CONFIG = {
     supabaseUrl: "https://iiwgcszmfrtstntondcd.supabase.co",
-    supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlpd2djc3ptZnJ0c3RudG9uZGNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMzU3MjIsImV4cCI6MjEwNzYxMTcyMn0.SN7uv7ZUtvXSHzazW92kJecW9qMOqKRPYHNOCsyzeoc", // anon Key: darf öffentlich sein
+    supabaseAnonKey: "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imlpd2djc3ptZnJ0c3RudG9uZGNkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3OTIwMzU3MjIsImV4cCI6MjEwNzYxMTcyMn0.SN7uv7ZUtvXSHzazW92kJecW9qMOqKRPYHNOCsyzeoc",
     poll: {
-      id: "bergsee-2026",   // eindeutig pro Umfrage
+      id: "bergsee-2026",
       question: "Welches ist der schönste Bergsee Graubündens?",
       options: [
         { id: "cresta", label: "Cresta-See" },
-        { id: "rims",   label: "Lai da Rims" }
+        { id: "rims", label: "Lai da Rims" }
       ]
     }
   };
@@ -156,126 +198,278 @@ fieldset { border: 0; margin: 0; padding: 0; min-width: 0; }
   var root = document.getElementById("poll");
   var form = root.querySelector(".poll-form");
   var optsBox = root.querySelector(".options");
-  var btn = root.querySelector(".btn");
-  var msg = root.querySelector(".msg");
-  var resBox = root.querySelector(".results");
+  var submitBtn = form.querySelector(".btn");
+  var formMsg = form.querySelector(".msg");
+  var resultsBox = root.querySelector(".results");
   var bars = root.querySelector(".bars");
   var totalEl = root.querySelector(".total");
-  var P = CONFIG.poll;
+  var resultError = root.querySelector(".results-error");
+  var retryBtn = root.querySelector(".retry-btn");
+  var poll = CONFIG.poll;
   var demo = !CONFIG.supabaseUrl || !CONFIG.supabaseAnonKey;
-  var KEY_VOTED = "gr_poll_voted_" + P.id;
-  var KEY_DEMO = "gr_poll_demo_" + P.id;
+  var KEY_VOTED = "gr_poll_voted_" + poll.id;
+  var KEY_DEMO = "gr_poll_demo_" + poll.id;
+  var myVote = null;
 
-  function store(op, k, v) {
-    try { return op === "get" ? localStorage.getItem(k) : localStorage.setItem(k, v); }
-    catch (e) { return null; }
+  function store(operation, key, value) {
+    try {
+      if (operation === "get") return localStorage.getItem(key);
+      localStorage.setItem(key, value);
+      return value;
+    } catch (error) {
+      return null;
+    }
   }
 
-  form.querySelector(".question").textContent = P.question;
-  root.querySelector("#result-question").textContent = P.question;
+  function logError(context, error) {
+    if (window.console && console.error) console.error("Poll – " + context + ":", error);
+  }
 
-  P.options.forEach(function (o, i) {
+  form.querySelector(".question").textContent = poll.question;
+  root.querySelector("#result-question").textContent = poll.question;
+
+  poll.options.forEach(function (option, index) {
     var label = document.createElement("label");
     label.className = "opt";
+
     var input = document.createElement("input");
-    input.type = "radio"; input.name = "poll-" + P.id; input.value = o.id;
+    input.type = "radio";
+    input.name = "poll-" + poll.id;
+    input.value = option.id;
+
     var key = document.createElement("span");
-    key.className = "key"; key.textContent = String.fromCharCode(65 + i) + ")";
-    var txt = document.createElement("span");
-    txt.textContent = o.label;
-    label.appendChild(input); label.appendChild(key); label.appendChild(txt);
+    key.className = "key";
+    key.textContent = String.fromCharCode(65 + index) + ")";
+
+    var text = document.createElement("span");
+    text.className = "option-label";
+    text.textContent = option.label;
+
+    label.appendChild(input);
+    label.appendChild(key);
+    label.appendChild(text);
     optsBox.appendChild(label);
   });
 
-  optsBox.addEventListener("change", function () { btn.disabled = false; });
+  optsBox.addEventListener("change", function () {
+    submitBtn.disabled = !form.querySelector('input[type="radio"]:checked');
+  });
 
-  function rpc(fn, body) {
-    return fetch(CONFIG.supabaseUrl + "/rest/v1/rpc/" + fn, {
+  function rpc(functionName, body) {
+    var baseUrl = CONFIG.supabaseUrl.replace(/\/+$/, "");
+    return fetch(baseUrl + "/rest/v1/rpc/" + encodeURIComponent(functionName), {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        apikey: CONFIG.supabaseAnonKey,
-        Authorization: "Bearer " + CONFIG.supabaseAnonKey
+        "apikey": CONFIG.supabaseAnonKey,
+        "Authorization": "Bearer " + CONFIG.supabaseAnonKey
       },
-      body: JSON.stringify(body)
-    }).then(function (r) {
-      if (!r.ok) throw new Error("HTTP " + r.status);
-      return r.status === 204 ? null : r.json();
+      body: JSON.stringify(body),
+      cache: "no-store"
+    }).then(function (response) {
+      return response.text().then(function (text) {
+        var payload = null;
+        if (text) {
+          try {
+            payload = JSON.parse(text);
+          } catch (parseError) {
+            payload = text;
+          }
+        }
+        if (!response.ok) {
+          var detail = typeof payload === "string" ? payload : JSON.stringify(payload);
+          throw new Error("HTTP " + response.status + (detail ? ": " + detail : ""));
+        }
+        return payload;
+      });
     });
   }
 
-  function loadResults() {
-    if (demo) {
-      var d = {};
-      try { d = JSON.parse(store("get", KEY_DEMO) || "{}"); } catch (e) {}
-      return Promise.resolve(d);
+  function loadDemoResults() {
+    var saved = {};
+    try { saved = JSON.parse(store("get", KEY_DEMO) || "{}"); } catch (error) {}
+    return Promise.resolve(saved);
+  }
+
+  function normalizeResults(response) {
+    var rows = response;
+    var data = {};
+
+    if (rows && !Array.isArray(rows) && Array.isArray(rows.results)) rows = rows.results;
+    if (rows && !Array.isArray(rows) && Array.isArray(rows.data)) rows = rows.data;
+
+    if (Array.isArray(rows)) {
+      rows.forEach(function (row) {
+        if (!row || row.option_id == null) return;
+        var count = row.votes;
+        if (count == null) count = row.vote_count;
+        if (count == null) count = row.count;
+        data[String(row.option_id)] = Number(count) || 0;
+      });
+      return data;
     }
-    return rpc("get_poll_results", { p_poll_id: P.id }).then(function (rows) {
-      var d = {};
-      (rows || []).forEach(function (r) { d[r.option_id] = Number(r.votes); });
-      return d;
-    });
+
+    if (rows && typeof rows === "object") {
+      if (rows.option_id != null) {
+        var rowCount = rows.votes;
+        if (rowCount == null) rowCount = rows.vote_count;
+        if (rowCount == null) rowCount = rows.count;
+        data[String(rows.option_id)] = Number(rowCount) || 0;
+        return data;
+      }
+      Object.keys(rows).forEach(function (optionId) {
+        var value = rows[optionId];
+        if (value && typeof value === "object") {
+          value = value.votes != null ? value.votes : (value.vote_count != null ? value.vote_count : value.count);
+        }
+        data[optionId] = Number(value) || 0;
+      });
+      return data;
+    }
+
+    if (rows == null) return data;
+    throw new Error("Unerwartetes Antwortformat von get_poll_results.");
+  }
+
+  function loadResults() {
+    if (demo) return loadDemoResults();
+    return rpc("get_poll_results", { p_poll_id: poll.id }).then(normalizeResults);
   }
 
   function sendVote(optionId) {
     if (demo) {
-      return loadResults().then(function (d) {
-        d[optionId] = (d[optionId] || 0) + 1;
-        store("set", KEY_DEMO, JSON.stringify(d));
+      return loadDemoResults().then(function (data) {
+        data[optionId] = (data[optionId] || 0) + 1;
+        store("set", KEY_DEMO, JSON.stringify(data));
       });
     }
-    return rpc("cast_poll_vote", { p_poll_id: P.id, p_option_id: optionId });
+    return rpc("cast_poll_vote", {
+      p_poll_id: poll.id,
+      p_option_id: optionId
+    });
   }
 
   function showResults(data, mine) {
-    var total = P.options.reduce(function (s, o) { return s + (data[o.id] || 0); }, 0);
+    var total = poll.options.reduce(function (sum, option) {
+      return sum + (Number(data[option.id]) || 0);
+    }, 0);
+
     bars.textContent = "";
-    P.options.forEach(function (o) {
-      var n = data[o.id] || 0;
-      var pct = total ? Math.round((n / total) * 100) : 0;
-      var li = document.createElement("li");
-      li.className = "row" + (o.id === mine ? " row--mine" : "");
-      var head = document.createElement("div"); head.className = "row-head";
-      var l = document.createElement("span"); l.className = "label"; l.textContent = o.label;
-      var p = document.createElement("span"); p.textContent = pct + " % (" + n + ")";
-      head.appendChild(l); head.appendChild(p);
-      var track = document.createElement("div"); track.className = "track";
+    poll.options.forEach(function (option) {
+      var count = Number(data[option.id]) || 0;
+      var percent = total ? Math.round((count / total) * 100) : 0;
+      var item = document.createElement("li");
+      item.className = "row" + (option.id === mine ? " row--mine" : "");
+
+      var head = document.createElement("div");
+      head.className = "row-head";
+      var label = document.createElement("span");
+      label.className = "label";
+      label.textContent = option.label;
+      var value = document.createElement("span");
+      value.textContent = percent + " % (" + count + ")";
+      head.appendChild(label);
+      head.appendChild(value);
+
+      var track = document.createElement("div");
+      track.className = "track";
       track.setAttribute("role", "progressbar");
-      track.setAttribute("aria-valuemin", "0"); track.setAttribute("aria-valuemax", "100");
-      track.setAttribute("aria-valuenow", pct); track.setAttribute("aria-label", o.label);
-      var fill = document.createElement("div"); fill.className = "fill";
+      track.setAttribute("aria-valuemin", "0");
+      track.setAttribute("aria-valuemax", "100");
+      track.setAttribute("aria-valuenow", String(percent));
+      track.setAttribute("aria-label", option.label);
+
+      var fill = document.createElement("div");
+      fill.className = "fill";
       track.appendChild(fill);
-      li.appendChild(head); li.appendChild(track);
-      bars.appendChild(li);
-      requestAnimationFrame(function () { requestAnimationFrame(function () { fill.style.width = pct + "%"; }); });
+      item.appendChild(head);
+      item.appendChild(track);
+      bars.appendChild(item);
+
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () { fill.style.width = percent + "%"; });
+      });
     });
+
     totalEl.textContent = total + (total === 1 ? " Stimme" : " Stimmen") +
       (demo ? " · Demo-Modus (nicht zentral gespeichert)" : "");
+    resultError.hidden = true;
+    retryBtn.hidden = true;
     form.hidden = true;
-    resBox.hidden = false;
+    resultsBox.hidden = false;
+    myVote = mine || null;
   }
 
-  // Abstimmen per Klick (kein touchstart/touchend)
-  btn.addEventListener("click", function (e) {
-    e.preventDefault();
-    var chosen = form.querySelector("input[type=radio]:checked");
-    if (!chosen) return;
-    btn.disabled = true; msg.textContent = "";
+  function showResultsError(message, error) {
+    if (error) logError("Ergebnisse laden", error);
+    form.hidden = true;
+    resultsBox.hidden = false;
+    bars.textContent = "";
+    totalEl.textContent = "";
+    resultError.textContent = message;
+    resultError.hidden = false;
+    retryBtn.hidden = false;
+  }
+
+  function retryResults() {
+    retryBtn.disabled = true;
+    retryBtn.textContent = "Lädt …";
+    loadResults().then(function (data) {
+      showResults(data, myVote);
+    }).catch(function (error) {
+      showResultsError("Die Ergebnisse konnten nicht geladen werden. Bitte versuche es erneut.", error);
+    }).finally(function () {
+      retryBtn.disabled = false;
+      retryBtn.textContent = "Ergebnisse erneut laden";
+    });
+  }
+
+  retryBtn.addEventListener("click", retryResults);
+
+  form.addEventListener("submit", function (event) {
+    event.preventDefault();
+    var chosen = form.querySelector('input[type="radio"]:checked');
+    if (!chosen || submitBtn.disabled) return;
+
+    submitBtn.disabled = true;
+    formMsg.textContent = "Deine Stimme wird übermittelt …";
+
     sendVote(chosen.value)
-      .then(function () { store("set", KEY_VOTED, chosen.value); return loadResults(); })
-      .then(function (d) { showResults(d, chosen.value); })
-      .catch(function () {
-        msg.textContent = "Leider hat das Abstimmen nicht geklappt. Bitte versuche es später erneut.";
-        btn.disabled = false;
+      .then(function () {
+        myVote = chosen.value;
+        store("set", KEY_VOTED, chosen.value);
+        formMsg.textContent = "";
+        return loadResults();
+      })
+      .then(function (data) {
+        showResults(data, myVote);
+      })
+      .catch(function (error) {
+        logError("Abstimmen oder Ergebnisse laden", error);
+        var savedVote = store("get", KEY_VOTED);
+        if (savedVote) {
+          myVote = savedVote;
+          showResultsError("Deine Stimme wurde möglicherweise gespeichert, aber die Ergebnisse konnten nicht geladen werden. Bitte lade sie erneut.", error);
+        } else {
+          formMsg.textContent = "Leider hat das Abstimmen nicht geklappt. Bitte versuche es später erneut.";
+          submitBtn.disabled = !form.querySelector('input[type="radio"]:checked');
+        }
       });
   });
-  form.addEventListener("submit", function (e) { e.preventDefault(); });
 
-  var already = store("get", KEY_VOTED);
-  if (already) {
-    loadResults().then(function (d) { showResults(d, already); })
-      .catch(function () { msg.textContent = "Die Ergebnisse konnten nicht geladen werden."; });
-  }
+  var alreadyVoted = store("get", KEY_VOTED);
+  if (alreadyVoted) myVote = alreadyVoted;
+
+  /* Ergebnisse beim Seitenaufruf abfragen.
+     Wie bisher werden sie erst nach eigener Stimme angezeigt. */
+  loadResults().then(function (data) {
+    if (alreadyVoted) showResults(data, alreadyVoted);
+  }).catch(function (error) {
+    logError("Ergebnisse beim Laden", error);
+    if (alreadyVoted) {
+      showResultsError("Die Ergebnisse konnten nicht geladen werden. Bitte versuche es erneut.", error);
+    }
+  });
 })();
 </script>
 
